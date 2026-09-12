@@ -1,6 +1,6 @@
-// AeroDoc Web Studio Client Controller
+// AeroDoc Executive Universal Studio Controller
 document.addEventListener('DOMContentLoaded', () => {
-  // Elements
+  // DOM Elements
   const dropzone = document.getElementById('dropzone');
   const fileInput = document.getElementById('fileInput');
   const browseBtn = document.getElementById('browseBtn');
@@ -14,12 +14,13 @@ document.addEventListener('DOMContentLoaded', () => {
   const viewerContent = document.getElementById('viewerContent');
   const dualPanes = document.getElementById('dualPanes');
 
-  // How to Use Modal
+  // Architecture Guide Modal
   const openGuideBtn = document.getElementById('openGuideBtn');
   const closeGuideBtn = document.getElementById('closeGuideBtn');
   const guideOverlay = document.getElementById('guideOverlay');
 
-  // Stats
+  // Telemetry
+  const statFormat = document.getElementById('statFormat');
   const statDocType = document.getElementById('statDocType');
   const statReadability = document.getElementById('statReadability');
   const statPages = document.getElementById('statPages');
@@ -27,17 +28,16 @@ document.addEventListener('DOMContentLoaded', () => {
   const statTables = document.getElementById('statTables');
   const statEquations = document.getElementById('statEquations');
   const statCallouts = document.getElementById('statCallouts');
-  const statImages = document.getElementById('statImages');
   const statSpeed = document.getElementById('statSpeed');
 
-  // Toolbar & Actions
+  // Action Bar
   const uniqueFilenameBadge = document.getElementById('uniqueFilenameBadge');
   const copyBtn = document.getElementById('copyBtn');
   const downloadMdBtn = document.getElementById('downloadMdBtn');
   const downloadZipBtn = document.getElementById('downloadZipBtn');
-  const tabBtns = document.querySelectorAll('.tab-btn');
+  const modeBtns = document.querySelectorAll('.mode-btn');
 
-  // Viewer Panes
+  // Left & Right Canvases
   const pdfPane = document.getElementById('pdfPane');
   const pdfPageImg = document.getElementById('pdfPageImg');
   const prevPageBtn = document.getElementById('prevPageBtn');
@@ -53,6 +53,12 @@ document.addEventListener('DOMContentLoaded', () => {
   let currentPage = 1;
   let totalPages = 1;
   let currentMarkdown = '';
+
+  // Allowed format extensions
+  const ALLOWED_EXTS = [
+    '.pdf', '.docx', '.doc', '.txt', '.text', '.log',
+    '.csv', '.tsv', '.html', '.htm', '.rtf', '.json', '.yaml', '.md'
+  ];
 
   // Modal Handlers
   openGuideBtn.addEventListener('click', () => {
@@ -99,10 +105,14 @@ document.addEventListener('DOMContentLoaded', () => {
   dropzone.addEventListener('drop', (e) => {
     const dt = e.dataTransfer;
     const files = dt.files;
-    if (files.length > 0 && files[0].name.toLowerCase().endsWith('.pdf')) {
-      handleFileSelected(files[0]);
-    } else {
-      showToast('Please provide a valid .pdf document.');
+    if (files.length > 0) {
+      const fileName = files[0].name.toLowerCase();
+      const isValid = ALLOWED_EXTS.some(ext => fileName.endsWith(ext));
+      if (isValid) {
+        handleFileSelected(files[0]);
+      } else {
+        showToast('Unsupported document type. Supported: PDF, DOCX, TXT, HTML, CSV, JSON.');
+      }
     }
   });
 
@@ -121,15 +131,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function handleFileSelected(file) {
     currentFile = file;
-    fileNamePreview.textContent = `Selected: ${file.name} (${(file.size / 1024 / 1024).toFixed(2)} MB)`;
+    const ext = file.name.substring(file.name.lastIndexOf('.')).toUpperCase();
+    fileNamePreview.textContent = `Selected: ${file.name} [${ext}] (${(file.size / 1024 / 1024).toFixed(2)} MB)`;
     convertBtn.disabled = false;
   }
 
-  // 1-Click Sample Test Document
+  // 1-Click Sample Benchmark Trigger
   loadSampleBtn.addEventListener('click', async (e) => {
     e.stopPropagation();
     loadSampleBtn.disabled = true;
-    showToast('Loading pre-built benchmark test document...');
+    showToast('Loading benchmark quantum architecture document...');
 
     try {
       const resp = await fetch('/api/sample');
@@ -139,7 +150,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       const data = await resp.json();
       displayResults(data);
-      showToast('Sample document synthesized successfully!');
+      showToast('Benchmark document synthesized successfully.');
     } catch (err) {
       showToast(`Error: ${err.message}`);
     } finally {
@@ -151,10 +162,9 @@ document.addEventListener('DOMContentLoaded', () => {
   convertBtn.addEventListener('click', async () => {
     if (!currentFile) return;
 
-    // UI Loading state
     convertBtn.disabled = true;
     btnSpinner.style.display = 'inline-block';
-    btnText.textContent = 'Synthesizing...';
+    btnText.textContent = 'Synthesizing AST...';
 
     const formData = new FormData();
     formData.append('file', currentFile);
@@ -179,10 +189,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const data = await response.json();
       displayResults(data);
-      showToast('Conversion complete! File ready.');
+      showToast('Conversion complete. Document ready.');
     } catch (err) {
       console.error(err);
-      showToast(`Error: ${err.message}`);
+      showToast(`System Error: ${err.message}`);
     } finally {
       convertBtn.disabled = false;
       btnSpinner.style.display = 'none';
@@ -194,21 +204,21 @@ document.addEventListener('DOMContentLoaded', () => {
   function displayResults(data) {
     currentSessionId = data.sessionId;
     currentMarkdown = data.markdown;
-    totalPages = data.stats.pages;
+    totalPages = data.stats.pages || 1;
     currentPage = 1;
 
-    // Populate Metrics
-    statDocType.textContent = data.stats.document_type || 'Technical Document';
-    statReadability.textContent = data.stats.readability_grade || 'General Audience';
-    statPages.textContent = data.stats.pages;
+    // Populate Telemetry
+    statFormat.textContent = data.format || 'DOCUMENT';
+    statDocType.textContent = data.stats.document_type || 'Executive Document';
+    statReadability.textContent = data.stats.readability_grade || 'Professional Audience';
+    statPages.textContent = data.stats.pages || 1;
     statWords.textContent = data.stats.word_count.toLocaleString();
-    statTables.textContent = data.stats.tables_extracted;
-    statEquations.textContent = data.stats.equations_found;
-    statCallouts.textContent = data.stats.callouts_transformed;
-    statImages.textContent = data.stats.images_extracted;
-    statSpeed.textContent = `${data.stats.elapsed_seconds}s`;
+    statTables.textContent = data.stats.tables_extracted || 0;
+    statEquations.textContent = data.stats.equations_found || 0;
+    statCallouts.textContent = data.stats.callouts_transformed || 0;
+    statSpeed.textContent = `${data.stats.elapsed_seconds || 0}s`;
 
-    // Unique Download Filename
+    // Unique Download Name
     uniqueFilenameBadge.textContent = data.uniqueFilename;
     uniqueFilenameBadge.title = `Unique Download Name: ${data.uniqueFilename}`;
 
@@ -227,19 +237,19 @@ document.addEventListener('DOMContentLoaded', () => {
     // Set Raw Content
     mdRaw.value = currentMarkdown;
 
-    // Render Formatted Content with Antigravity Alerts & KaTeX
-    renderAntigravityMarkdown(currentMarkdown);
+    // Render Editorial Markdown with Antigravity Alerts & KaTeX
+    renderEditorialMarkdown(currentMarkdown);
 
-    // Update PDF page preview
-    updatePagePreview();
+    // Update Blueprint Viewport
+    updateBlueprintPreview();
 
     // Toggle Visibility
     emptyState.style.display = 'none';
     viewerContent.style.display = 'flex';
   }
 
-  // Antigravity Markdown Renderer (Zero Blue)
-  function renderAntigravityMarkdown(mdText) {
+  // Antigravity Markdown Renderer (Clean Hairline Styling)
+  function renderEditorialMarkdown(mdText) {
     // 1. Transform Antigravity / GitHub Alerts
     let processedText = mdText.replace(
       />\s*\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]\n((?:>.*(?:\n|$))*)/g,
@@ -269,14 +279,14 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
 
-    // 4. Highlight code blocks
+    // 4. Syntax Highlight Code Blocks
     if (window.Prism) {
       Prism.highlightAllUnder(mdRendered);
     }
   }
 
-  // Page Preview Navigation
-  function updatePagePreview() {
+  // Blueprint Preview Navigation
+  function updateBlueprintPreview() {
     pageIndicator.textContent = `Page ${currentPage} / ${totalPages}`;
     prevPageBtn.disabled = (currentPage <= 1);
     nextPageBtn.disabled = (currentPage >= totalPages);
@@ -289,21 +299,21 @@ document.addEventListener('DOMContentLoaded', () => {
   prevPageBtn.addEventListener('click', () => {
     if (currentPage > 1) {
       currentPage--;
-      updatePagePreview();
+      updateBlueprintPreview();
     }
   });
 
   nextPageBtn.addEventListener('click', () => {
     if (currentPage < totalPages) {
       currentPage++;
-      updatePagePreview();
+      updateBlueprintPreview();
     }
   });
 
-  // Tab View Switcher
-  tabBtns.forEach(btn => {
+  // Mode View Switcher
+  modeBtns.forEach(btn => {
     btn.addEventListener('click', () => {
-      tabBtns.forEach(b => b.classList.remove('active'));
+      modeBtns.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
 
       const view = btn.getAttribute('data-view');
@@ -327,17 +337,17 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!currentMarkdown) return;
     try {
       await navigator.clipboard.writeText(currentMarkdown);
-      showToast('Copied full Antigravity Markdown to clipboard!');
+      showToast('Document Markdown copied to system clipboard.');
     } catch (err) {
       mdRaw.select();
       document.execCommand('copy');
-      showToast('Copied to clipboard!');
+      showToast('Copied to clipboard.');
     }
   });
 
-  // Download Action Listeners
+  // Download Feedback
   downloadMdBtn.addEventListener('click', () => {
-    showToast(`Downloading: ${uniqueFilenameBadge.textContent}`);
+    showToast(`Streaming: ${uniqueFilenameBadge.textContent}`);
   });
 
   function showToast(msg) {
@@ -345,6 +355,6 @@ document.addEventListener('DOMContentLoaded', () => {
     toast.style.display = 'block';
     setTimeout(() => {
       toast.style.display = 'none';
-    }, 4000);
+    }, 3800);
   }
 });

@@ -3,240 +3,249 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AeroDoc // Intelligent PDF-to-Markdown Engine</title>
+  <title>AeroDoc // Enterprise Document Intelligence</title>
   
-  <!-- Fonts & Libraries -->
+  <!-- Typography -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   
-  <!-- KaTeX for Math rendering -->
+  <!-- KaTeX for Mathematics -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
 
-  <!-- Marked.js for Markdown parsing -->
+  <!-- Marked Parser -->
   <script src="https://cdn.jsdelivr.net/npm/marked@12.0.0/marked.min.js"></script>
 
-  <!-- PrismJS for Syntax Highlighting -->
+  <!-- Prism Syntax Highlighter -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css">
   <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
 
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="app-container">
-    <!-- Header -->
-    <header class="studio-header">
-      <div class="brand">
-        <div class="brand-logo">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-            <polyline points="14 2 14 8 20 8"></polyline>
-            <line x1="16" y1="13" x2="8" y2="13"></line>
-            <line x1="16" y1="17" x2="8" y2="17"></line>
-            <polyline points="10 9 9 9 8 9"></polyline>
+  <div class="app-shell">
+    <!-- Executive Header -->
+    <header class="executive-header">
+      <div class="brand-section">
+        <div class="brand-symbol">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <rect x="3" y="3" width="18" height="18" rx="3" ry="3"/>
+            <line x1="8" y1="9" x2="16" y2="9"/>
+            <line x1="8" y1="13" x2="16" y2="13"/>
+            <line x1="8" y1="17" x2="13" y2="17"/>
           </svg>
         </div>
-        <div class="brand-text">
-          <h1>AERODOC <span class="badge-antigravity">ANTIGRAVITY EDITION</span></h1>
-          <p class="tagline">Lossless Multi-Column Topology & Markdown Synthesizer</p>
+        <div class="brand-meta">
+          <h1>AERODOC <span class="edition-tag">ENTERPRISE EDITION</span></h1>
+          <p class="system-caption">Universal Document Ingestion & Antigravity Markdown Synthesizer</p>
         </div>
       </div>
 
-      <div class="header-controls">
-        <button class="btn-how-to-use" id="openGuideBtn">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-          HOW TO USE
+      <div class="header-status-group">
+        <div class="format-ribbon">
+          <span class="format-pill highlight">PDF</span>
+          <span class="format-pill highlight">DOCX</span>
+          <span class="format-pill">TXT</span>
+          <span class="format-pill">HTML</span>
+          <span class="format-pill">CSV</span>
+          <span class="format-pill">JSON</span>
+        </div>
+
+        <button class="btn-architecture-guide" id="openGuideBtn">
+          SYSTEM GUIDE
         </button>
-        <div class="security-badge" title="Magic-byte verification, size guardrails, rate limiting active">
-          <span class="status-indicator live"></span>
-          <span>HARDENED ENGINE</span>
+
+        <div class="engine-telemetry" title="Enterprise Guardrails Active: Magic-Byte Inspection & Velocity Limiter">
+          <span class="telemetry-node"></span>
+          <span>ONLINE // HARDENED</span>
         </div>
       </div>
     </header>
 
-    <!-- Main Workspace -->
-    <main class="workspace">
-      <!-- Upload & Control Sidebar -->
-      <section class="control-panel glass-card" id="controlPanel">
-        <div class="panel-section-title">
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+    <!-- Workspace Grid -->
+    <main class="workspace-grid">
+      <!-- Ingestion & Parameters Sidebar -->
+      <section class="controls-panel glass-panel" id="controlsPanel">
+        <div class="panel-header-sub">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
           Document Ingestion
         </div>
 
-        <!-- Dropzone -->
-        <div class="dropzone" id="dropzone">
-          <input type="file" id="fileInput" accept=".pdf" style="display: none;">
-          <div class="dropzone-inner">
-            <div class="drop-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+        <!-- Universal Multi-Format Dropzone -->
+        <div class="universal-dropzone" id="dropzone">
+          <input type="file" id="fileInput" accept=".pdf,.docx,.doc,.txt,.text,.log,.csv,.tsv,.html,.htm,.rtf,.json,.yaml,.md" style="display: none;">
+          <div class="dropzone-core">
+            <div class="upload-icon-container">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                 <path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242M12 12v9m0-9l-3 3m3-3l3 3"/>
               </svg>
             </div>
-            <p class="drop-title">Drag & drop PDF here</p>
-            <p class="drop-hint">or <button type="button" class="btn-text" id="browseBtn">browse files</button></p>
+            <p class="drop-headline">Drop Document Here</p>
+            <p class="drop-subtext">PDF, DOCX, TXT, HTML, CSV or <button type="button" class="btn-inline-browse" id="browseBtn">browse local</button></p>
             
-            <div class="sample-button-container">
-              <button type="button" class="btn-sample" id="loadSampleBtn" title="Instant 1-click test with pre-built benchmark document">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-                Load Sample Test PDF
+            <div class="sample-trigger-block">
+              <button type="button" class="btn-sample-executive" id="loadSampleBtn" title="Instant test with pre-built quantum architecture document">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                Load Benchmark Document
               </button>
             </div>
 
-            <div class="file-name-preview" id="fileNamePreview"></div>
+            <div class="file-selected-indicator" id="fileNamePreview"></div>
           </div>
         </div>
 
-        <!-- Intelligence Flags -->
-        <div class="panel-section-title" style="margin-top: 1.25rem;">
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-          Conversion Parameters
+        <!-- Intelligence Parameters -->
+        <div class="panel-header-sub" style="margin-top: 1rem;">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+          Synthesis Settings
         </div>
 
-        <div class="toggle-list">
-          <label class="toggle-item">
-            <span class="toggle-label">
-              <strong>Embed Images (Base64)</strong>
-              <small>100% self-contained single .md file</small>
+        <div class="options-matrix">
+          <label class="option-row">
+            <span class="option-label">
+              <strong>Inline Base64 Graphics</strong>
+              <small>Produces self-contained single .md files</small>
             </span>
             <input type="checkbox" id="embedImages" checked>
-            <span class="slider"></span>
+            <span class="switch-slider"></span>
           </label>
 
-          <label class="toggle-item">
-            <span class="toggle-label">
-              <strong>YAML Frontmatter</strong>
-              <small>Metadata, reading index, pages</small>
+          <label class="option-row">
+            <span class="option-label">
+              <strong>YAML Indexing Frontmatter</strong>
+              <small>Document metadata & reading complexity</small>
             </span>
             <input type="checkbox" id="includeFrontmatter" checked>
-            <span class="slider"></span>
+            <span class="switch-slider"></span>
           </label>
 
-          <label class="toggle-item">
-            <span class="toggle-label">
-              <strong>Multi-Column Unrolling</strong>
-              <small>Preserves natural reading order</small>
+          <label class="option-row">
+            <span class="option-label">
+              <strong>Multi-Column Linearization</strong>
+              <small>Preserves natural reading order flow</small>
             </span>
             <input type="checkbox" id="unrollColumns" checked>
-            <span class="slider"></span>
+            <span class="switch-slider"></span>
           </label>
 
-          <label class="toggle-item">
-            <span class="toggle-label">
-              <strong>KaTeX Math Engine</strong>
-              <small>Formats inline $ and display $$ formulas</small>
+          <label class="option-row">
+            <span class="option-label">
+              <strong>KaTeX Math Transpiler</strong>
+              <small>Converts inline $ and display $$ formulas</small>
             </span>
             <input type="checkbox" id="detectMath" checked>
-            <span class="slider"></span>
+            <span class="switch-slider"></span>
           </label>
 
-          <label class="toggle-item">
-            <span class="toggle-label">
-              <strong>GFM Table Extraction</strong>
-              <small>Lossless multi-column table cells</small>
+          <label class="option-row">
+            <span class="option-label">
+              <strong>GFM Table Reconstruction</strong>
+              <small>Lossless multi-column cell mapping</small>
             </span>
             <input type="checkbox" id="detectTables" checked>
-            <span class="slider"></span>
+            <span class="switch-slider"></span>
           </label>
 
-          <label class="toggle-item">
-            <span class="toggle-label">
+          <label class="option-row">
+            <span class="option-label">
               <strong>Antigravity Alert Boxes</strong>
-              <small>Converts notes/warnings to > [!NOTE]</small>
+              <small>Formats notes & warnings as > [!NOTE]</small>
             </span>
             <input type="checkbox" id="detectCallouts" checked>
-            <span class="slider"></span>
+            <span class="switch-slider"></span>
           </label>
         </div>
 
-        <button class="btn btn-primary btn-block" id="convertBtn" disabled>
-          <span class="btn-spinner" id="btnSpinner" style="display: none;"></span>
+        <button class="btn-executive" id="convertBtn" disabled>
+          <span class="spinner-hairline" id="btnSpinner" style="display: none;"></span>
           <span id="btnText">Convert to Markdown (Ctrl+Enter)</span>
         </button>
       </section>
 
-      <!-- Results & Viewer Section -->
-      <section class="results-viewer glass-card" id="resultsViewer">
-        <!-- Initial Blank Placeholder -->
-        <div class="empty-state" id="emptyState">
-          <div class="empty-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+      <!-- Results & Visual Studio -->
+      <section class="results-panel glass-panel" id="resultsPanel">
+        <!-- Initial Blank Canvas -->
+        <div class="empty-canvas" id="emptyState">
+          <div class="canvas-blueprint-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25">
               <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
-              <line x1="9" y1="3" x2="9" y2="21"/>
+              <line x1="3" y1="9" x2="21" y2="9"/>
+              <line x1="9" y1="21" x2="9" y2="9"/>
             </svg>
           </div>
-          <h3>Awaiting Document</h3>
-          <p>Drop a PDF document or click <strong>Load Sample Test PDF</strong> to experience instant layout-aware Markdown synthesis.</p>
+          <h3>Architectural Canvas Ready</h3>
+          <p>Provide a document (PDF, Word DOCX, TXT, HTML, or CSV) or click <strong>Load Benchmark Document</strong> to view live side-by-side synthesis.</p>
         </div>
 
-        <!-- Populated Results Container -->
-        <div class="viewer-content" id="viewerContent" style="display: none;">
-          <!-- Top Stats Header -->
-          <div class="stats-ribbon">
-            <div class="stat-pill fuchsia-tag"><span class="label">Classification:</span> <span class="val" id="statDocType">Document</span></div>
-            <div class="stat-pill"><span class="label">Audience:</span> <span class="val" id="statReadability">General</span></div>
-            <div class="stat-pill"><span class="label">Pages:</span> <span class="val" id="statPages">0</span></div>
-            <div class="stat-pill"><span class="label">Words:</span> <span class="val" id="statWords">0</span></div>
-            <div class="stat-pill"><span class="label">Tables:</span> <span class="val" id="statTables">0</span></div>
-            <div class="stat-pill"><span class="label">Math:</span> <span class="val" id="statEquations">0</span></div>
-            <div class="stat-pill"><span class="label">Alerts:</span> <span class="val" id="statCallouts">0</span></div>
-            <div class="stat-pill"><span class="label">Figures:</span> <span class="val" id="statImages">0</span></div>
-            <div class="stat-pill highlight"><span class="label">Speed:</span> <span class="val" id="statSpeed">0s</span></div>
+        <!-- Populated Studio Content -->
+        <div class="studio-populated-content" id="viewerContent" style="display: none;">
+          <!-- Telemetry Ribbon -->
+          <div class="executive-telemetry-ribbon">
+            <div class="telemetry-chip gold-chip"><span class="k">Format:</span> <span class="v" id="statFormat">PDF</span></div>
+            <div class="telemetry-chip"><span class="k">Classification:</span> <span class="v" id="statDocType">Document</span></div>
+            <div class="telemetry-chip"><span class="k">Audience:</span> <span class="v" id="statReadability">General</span></div>
+            <div class="telemetry-chip"><span class="k">Pages:</span> <span class="v" id="statPages">0</span></div>
+            <div class="telemetry-chip"><span class="k">Words:</span> <span class="v" id="statWords">0</span></div>
+            <div class="telemetry-chip"><span class="k">Tables:</span> <span class="v" id="statTables">0</span></div>
+            <div class="telemetry-chip"><span class="k">Math:</span> <span class="v" id="statEquations">0</span></div>
+            <div class="telemetry-chip"><span class="k">Alerts:</span> <span class="v" id="statCallouts">0</span></div>
+            <div class="telemetry-chip gold-chip"><span class="k">Latency:</span> <span class="v" id="statSpeed">0s</span></div>
           </div>
 
-          <!-- Dynamic Actions Bar -->
-          <div class="action-toolbar">
-            <div class="view-switchers">
-              <button class="tab-btn active" data-view="split">Split View</button>
-              <button class="tab-btn" data-view="rendered">Rendered</button>
-              <button class="tab-btn" data-view="raw">Raw Markdown</button>
+          <!-- Action Control Bar -->
+          <div class="action-control-bar">
+            <div class="view-mode-selector">
+              <button class="mode-btn active" data-view="split">Split View</button>
+              <button class="mode-btn" data-view="rendered">Rendered</button>
+              <button class="mode-btn" data-view="raw">Raw Markdown</button>
             </div>
 
-            <div class="download-actions">
-              <div class="unique-name-tag" id="uniqueFilenameBadge" title="Unique output name for this download">
+            <div class="action-buttons-group">
+              <div class="unique-token-badge" id="uniqueFilenameBadge" title="Unique filename for this download">
                 file.md
               </div>
-              <button class="btn btn-secondary" id="copyBtn" title="Copy Markdown to Clipboard">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              <button class="btn-subtle" id="copyBtn" title="Copy Markdown to Clipboard">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
                 Copy
               </button>
-              <a class="btn btn-accent" id="downloadMdBtn" href="#" download>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              <a class="btn-subtle btn-solid-gold" id="downloadMdBtn" href="#" download>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                 Download .MD
               </a>
-              <a class="btn btn-outline" id="downloadZipBtn" href="#" style="display: none;">
+              <a class="btn-subtle" id="downloadZipBtn" href="#" style="display: none;">
                 Bundle .ZIP
               </a>
             </div>
           </div>
 
-          <!-- Dual Display Container -->
-          <div class="dual-panes" id="dualPanes">
-            <!-- Left Pane: PDF Page Visual Inspector -->
-            <div class="pane pdf-pane" id="pdfPane">
-              <div class="pane-header">
-                <span>PDF Source View</span>
-                <div class="page-nav">
-                  <button id="prevPageBtn" class="btn-icon">&lt;</button>
+          <!-- Dual Split Canvas -->
+          <div class="dual-split-canvas" id="dualPanes">
+            <!-- Left Pane: Source Visual & Blueprint Inspector -->
+            <div class="canvas-pane canvas-left-pane" id="pdfPane">
+              <div class="pane-nav-header">
+                <span>Document Blueprint View</span>
+                <div class="page-stepper">
+                  <button id="prevPageBtn" class="stepper-btn">&lt;</button>
                   <span id="pageIndicator">Page 1 / 1</span>
-                  <button id="nextPageBtn" class="btn-icon">&gt;</button>
+                  <button id="nextPageBtn" class="stepper-btn">&gt;</button>
                 </div>
               </div>
-              <div class="pdf-render-box" id="pdfRenderBox">
-                <img id="pdfPageImg" src="" alt="PDF Page Preview">
+              <div class="schematic-viewport" id="schematicViewport">
+                <img id="pdfPageImg" src="" alt="Document Schematic Preview">
               </div>
             </div>
 
-            <!-- Right Pane: Markdown Output -->
-            <div class="pane markdown-pane" id="mdPane">
-              <div class="pane-header">
-                <span>Antigravity Markdown Preview</span>
-                <span class="clean-badge">Clean GFM + KaTeX</span>
+            <!-- Right Pane: Antigravity Markdown Output -->
+            <div class="canvas-pane canvas-right-pane" id="mdPane">
+              <div class="pane-nav-header">
+                <span>Antigravity Markdown Output</span>
+                <span class="verified-tag">100% Lossless AST</span>
               </div>
               
               <!-- Rendered Tab -->
-              <div class="markdown-preview-body" id="mdRendered"></div>
+              <div class="markdown-editorial-body" id="mdRendered"></div>
 
               <!-- Raw Editor Tab -->
               <textarea class="raw-markdown-editor" id="mdRaw" readonly></textarea>
@@ -247,38 +256,35 @@
     </main>
   </div>
 
-  <!-- Interactive "How to Use" Modal Drawer -->
-  <div class="guide-overlay" id="guideOverlay">
-    <div class="guide-modal">
-      <div class="guide-header">
-        <h2>
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-          HOW TO USE AERODOC
-        </h2>
-        <button class="btn-close-modal" id="closeGuideBtn">&times;</button>
+  <!-- Executive Architecture Modal -->
+  <div class="modal-scrim" id="guideOverlay">
+    <div class="modal-dialog">
+      <div class="modal-header-bar">
+        <h2>AERODOC ARCHITECTURE & SYSTEM SPECIFICATION</h2>
+        <button class="btn-close-scrim" id="closeGuideBtn">&times;</button>
       </div>
-      <div class="guide-body">
-        <div class="guide-card">
-          <div class="guide-card-title"><span class="step-num">1</span> Document Ingestion & Parameters</div>
-          <p>Drag and drop any PDF file into the dropzone or click <strong>Load Sample Test PDF</strong> to test immediately. Configure toggles like Base64 image embedding (for single-file standalone markdown), YAML frontmatter, and multi-column unrolling.</p>
+      <div class="modal-content-scroller">
+        <div class="editorial-card">
+          <div class="card-title-row"><span class="step-marker">01</span> Universal Document Ingestion</div>
+          <p>AeroDoc ingests PDF, Word DOCX/DOC, Plain Text, HTML, and CSV data. Format-specific abstract syntax tree (AST) engines normalize headings, tables, bullet hierarchies, and code blocks into a common structural stream.</p>
         </div>
 
-        <div class="guide-card">
-          <div class="guide-card-title"><span class="step-num">2</span> Visual Inspection & Verification</div>
-          <p>The studio displays a live split-pane: the original high-resolution PDF page on the left, and the synthesized Markdown on the right. You can navigate through pages, inspect tables, examine rendered KaTeX math equations, and toggle between <strong>Split</strong>, <strong>Rendered</strong>, and <strong>Raw</strong> code views.</p>
+        <div class="editorial-card">
+          <div class="card-title-row"><span class="step-marker">02</span> Antigravity Callouts & KaTeX Transpilation</div>
+          <p>Visual callout containers and inline alerts are transformed directly into Antigravity standard alerts: <code>&gt; [!NOTE]</code>, <code>&gt; [!WARNING]</code>, <code>&gt; [!TIP]</code>, and <code>&gt; [!IMPORTANT]</code>. Mathematical notations and LaTeX expressions are wrapped into KaTeX blocks.</p>
         </div>
 
-        <div class="guide-card">
-          <div class="guide-card-title"><span class="step-num">3</span> 1-Click Antigravity Export</div>
-          <p>Click <strong>Copy</strong> to copy the entire markdown artifact to your clipboard, or click <strong>Download .MD</strong>. Each download automatically receives a unique timestamped filename, and server-side temporary files are zeroed out and purged immediately after transmission.</p>
+        <div class="editorial-card">
+          <div class="card-title-row"><span class="step-marker">03</span> Ephemeral Security & Unique Namespace</div>
+          <p>Every download generates a cryptographically salted unique filename. Once transmission completes, background tasks zero out the disk bytes and delete temporary server storage immediately.</p>
         </div>
 
-        <div class="guide-card">
-          <div class="guide-card-title"><span class="step-num">4</span> Keyboard Shortcuts & CLI</div>
+        <div class="editorial-card">
+          <div class="card-title-row"><span class="step-marker">04</span> Operational Controls & Shortcuts</div>
           <p>
-            Press <span class="kbd-shortcut">Ctrl + Enter</span> to trigger conversion.<br>
-            Press <span class="kbd-shortcut">Esc</span> to dismiss this guide.<br>
-            Or run via CLI: <span class="kbd-shortcut">python -m aerodoc.cli convert file.pdf -o out.md --embed-images</span>
+            Trigger conversion: <span class="kbd-tag">Ctrl + Enter</span><br>
+            Close modals: <span class="kbd-tag">Esc</span><br>
+            CLI execution: <span class="kbd-tag">python -m aerodoc.cli convert file.docx -o output.md</span>
           </p>
         </div>
       </div>
@@ -286,7 +292,7 @@
   </div>
 
   <!-- Toast Notification -->
-  <div class="toast" id="toast"></div>
+  <div class="executive-toast" id="toast"></div>
 
   <script src="app.js"></script>
 </body>
