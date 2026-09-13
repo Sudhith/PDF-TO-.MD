@@ -160,7 +160,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Convert Trigger
   convertBtn.addEventListener('click', async () => {
-    if (!currentFile) return;
+    if (!currentFile) {
+      showToast('Select a document or click "Load Benchmark Document"');
+      fileInput.click();
+      return;
+    }
 
     convertBtn.disabled = true;
     btnSpinner.style.display = 'inline-block';
@@ -212,7 +216,7 @@ document.addEventListener('DOMContentLoaded', () => {
     statDocType.textContent = data.stats.document_type || 'Executive Document';
     statReadability.textContent = data.stats.readability_grade || 'Professional Audience';
     statPages.textContent = data.stats.pages || 1;
-    statWords.textContent = data.stats.word_count.toLocaleString();
+    statWords.textContent = (data.stats.word_count || 0).toLocaleString();
     statTables.textContent = data.stats.tables_extracted || 0;
     statEquations.textContent = data.stats.equations_found || 0;
     statCallouts.textContent = data.stats.callouts_transformed || 0;
@@ -263,26 +267,41 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     );
 
-    // 2. Parse Markdown with marked.js
-    const html = marked.parse(processedText);
+    // 2. Parse Markdown with marked.js safely
+    let html = processedText;
+    if (window.marked && typeof window.marked.parse === 'function') {
+      try {
+        html = window.marked.parse(processedText);
+      } catch (e) {
+        console.warn('Marked parsing error:', e);
+      }
+    }
     mdRendered.innerHTML = html;
 
-    // 3. Render KaTeX Formulas
+    // 3. Render KaTeX Formulas safely
     if (window.renderMathInElement) {
-      renderMathInElement(mdRendered, {
-        delimiters: [
-          { left: '$$', right: '$$', display: true },
-          { left: '$', right: '$', display: false },
-          { left: '\\(', right: '\\)', display: false },
-          { left: '\\[', right: '\\]', display: true }
-        ],
-        throwOnError: false
-      });
+      try {
+        window.renderMathInElement(mdRendered, {
+          delimiters: [
+            { left: '$$', right: '$$', display: true },
+            { left: '$', right: '$', display: false },
+            { left: '\\(', right: '\\)', display: false },
+            { left: '\\[', right: '\\]', display: true }
+          ],
+          throwOnError: false
+        });
+      } catch (e) {
+        console.warn('KaTeX render warning:', e);
+      }
     }
 
-    // 4. Syntax Highlight Code Blocks
-    if (window.Prism) {
-      Prism.highlightAllUnder(mdRendered);
+    // 4. Syntax Highlight Code Blocks safely
+    if (window.Prism && typeof window.Prism.highlightAllUnder === 'function') {
+      try {
+        window.Prism.highlightAllUnder(mdRendered);
+      } catch (e) {
+        console.warn('Prism highlight warning:', e);
+      }
     }
   }
 

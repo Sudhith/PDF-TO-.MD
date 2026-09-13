@@ -76,3 +76,4 @@ tests/standalone_out.md
 tests/test_diagram.png
 
 .vercel
+uv.lock
