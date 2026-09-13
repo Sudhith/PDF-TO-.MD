@@ -158,6 +158,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+  const emptyLoadSampleBtn = document.getElementById('emptyLoadSampleBtn');
+  if (emptyLoadSampleBtn) {
+    emptyLoadSampleBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      loadSampleBtn.click();
+    });
+  }
   // Convert Trigger
   convertBtn.addEventListener('click', async () => {
     if (!currentFile) {
@@ -207,50 +214,65 @@ document.addEventListener('DOMContentLoaded', () => {
   // Display Conversion Results
   function displayResults(data) {
     currentSessionId = data.sessionId;
-    currentMarkdown = data.markdown;
-    totalPages = data.stats.pages || 1;
+    currentMarkdown = data.markdown || '';
+    totalPages = (data.stats && data.stats.pages) ? data.stats.pages : 1;
     currentPage = 1;
 
+    // Toggle Visibility immediately so UI is never blocked
+    if (emptyState) emptyState.style.display = 'none';
+    if (viewerContent) viewerContent.style.display = 'flex';
+
     // Populate Telemetry
-    statFormat.textContent = data.format || 'DOCUMENT';
-    statDocType.textContent = data.stats.document_type || 'Executive Document';
-    statReadability.textContent = data.stats.readability_grade || 'Professional Audience';
-    statPages.textContent = data.stats.pages || 1;
-    statWords.textContent = (data.stats.word_count || 0).toLocaleString();
-    statTables.textContent = data.stats.tables_extracted || 0;
-    statEquations.textContent = data.stats.equations_found || 0;
-    statCallouts.textContent = data.stats.callouts_transformed || 0;
-    statSpeed.textContent = `${data.stats.elapsed_seconds || 0}s`;
+    if (statFormat) statFormat.textContent = data.format || 'DOCUMENT';
+    if (statDocType) statDocType.textContent = (data.stats && data.stats.document_type) || 'Executive Document';
+    if (statReadability) statReadability.textContent = (data.stats && data.stats.readability_grade) || 'Professional Audience';
+    if (statPages) statPages.textContent = totalPages;
+    if (statWords) statWords.textContent = (data.stats && data.stats.word_count ? data.stats.word_count : 0).toLocaleString();
+    if (statTables) statTables.textContent = (data.stats && data.stats.tables_extracted) || 0;
+    if (statEquations) statEquations.textContent = (data.stats && data.stats.equations_found) || 0;
+    if (statCallouts) statCallouts.textContent = (data.stats && data.stats.callouts_transformed) || 0;
+    if (statSpeed) statSpeed.textContent = `${(data.stats && data.stats.elapsed_seconds) || 0}s`;
 
     // Unique Download Name
-    uniqueFilenameBadge.textContent = data.uniqueFilename;
-    uniqueFilenameBadge.title = `Unique Download Name: ${data.uniqueFilename}`;
+    if (uniqueFilenameBadge) {
+      uniqueFilenameBadge.textContent = data.uniqueFilename || 'document.md';
+      uniqueFilenameBadge.title = `Unique Download Name: ${data.uniqueFilename}`;
+    }
 
     // Setup Download Links
     const mdBlob = new Blob([currentMarkdown], { type: 'text/markdown;charset=utf-8' });
-    downloadMdBtn.href = URL.createObjectURL(mdBlob);
-    downloadMdBtn.setAttribute('download', data.uniqueFilename);
+    if (downloadMdBtn) {
+      downloadMdBtn.href = URL.createObjectURL(mdBlob);
+      downloadMdBtn.setAttribute('download', data.uniqueFilename || 'document.md');
+    }
 
-    if (data.uniqueZipFilename) {
-      downloadZipBtn.href = `/api/download/zip/${data.sessionId}`;
-      downloadZipBtn.setAttribute('download', data.uniqueZipFilename);
-      downloadZipBtn.style.display = 'inline-flex';
-    } else {
-      downloadZipBtn.style.display = 'none';
+    if (downloadZipBtn) {
+      if (data.uniqueZipFilename) {
+        downloadZipBtn.href = `/api/download/zip/${data.sessionId}`;
+        downloadZipBtn.setAttribute('download', data.uniqueZipFilename);
+        downloadZipBtn.style.display = 'inline-flex';
+      } else {
+        downloadZipBtn.style.display = 'none';
+      }
     }
 
     // Set Raw Content
-    mdRaw.value = currentMarkdown;
+    if (mdRaw) mdRaw.value = currentMarkdown;
 
     // Render Editorial Markdown with Antigravity Alerts & KaTeX
-    renderEditorialMarkdown(currentMarkdown);
+    try {
+      renderEditorialMarkdown(currentMarkdown);
+    } catch (e) {
+      console.warn('Render error:', e);
+      if (mdRendered) mdRendered.innerText = currentMarkdown;
+    }
 
     // Update Blueprint Viewport
-    updateBlueprintPreview();
-
-    // Toggle Visibility
-    emptyState.style.display = 'none';
-    viewerContent.style.display = 'flex';
+    try {
+      updateBlueprintPreview();
+    } catch (e) {
+      console.warn('Blueprint preview error:', e);
+    }
   }
 
   // Antigravity Markdown Renderer (Clean Hairline Styling)
