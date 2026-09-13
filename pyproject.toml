@@ -10,16 +10,28 @@ readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
     "PyMuPDF>=1.24.0",
-    "pdfplumber>=0.11.0",
+    "python-docx>=1.1.0",
+    "beautifulsoup4>=4.12.0",
     "pillow>=10.0.0",
     "fastapi>=0.110.0",
     "uvicorn>=0.29.0",
     "python-multipart>=0.0.9",
     "typer>=0.12.0",
     "rich>=13.7.0",
-    "pyyaml>=6.0.1"
+    "pyyaml>=6.0.1",
+    "reportlab>=4.0.0",
+    "starlette>=0.37.2"
 ]
 
 [project.scripts]
 aerodoc = "aerodoc.cli:main"
 pdf2md = "aerodoc.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["aerodoc*"]
+exclude = ["api*", "public*", "tests*"]
+
+[tool.vercel]
+entrypoint = "aerodoc.web.server:app"
+

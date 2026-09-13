@@ -32,7 +32,7 @@ from aerodoc.exceptions import (
 )
 from aerodoc.security import SecurityHeadersMiddleware, sanitize_filename
 from aerodoc.web.rate_limiter import RateLimitMiddleware
-from tests.generate_test_pdf import generate_benchmark_pdf
+from aerodoc.sample import generate_benchmark_pdf
 
 logger = logging.getLogger("aerodoc.server")
 
