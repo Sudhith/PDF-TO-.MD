@@ -114,6 +114,23 @@ def secure_wipe_path(path: Path):
     except Exception:
         pass
 
+@app.get("/api/health")
+@app.get("/health")
+async def health_check():
+    """Health check endpoint for container and edge monitoring."""
+    return {"status": "healthy", "service": "AeroDoc Universal Engine", "version": "2.0.0"}
+
+
+@app.post("/api/purge/{session_id}")
+async def purge_session(session_id: str, background_tasks: BackgroundTasks):
+    """Explicitly purges and zeroes session files immediately upon request."""
+    session = SESSIONS.pop(session_id, None)
+    if session:
+        session_dir = session.get("session_dir")
+        if session_dir and session_dir.exists():
+            background_tasks.add_task(secure_wipe_path, session_dir)
+    return {"success": True, "purged": True}
+
 
 @app.post("/api/convert")
 async def convert_document(

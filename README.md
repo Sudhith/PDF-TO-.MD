@@ -1,68 +1,115 @@
-# AeroDoc: Lossless Intelligent PDF-to-Markdown Engine
+# AeroDoc: Enterprise Document Intelligence & Universal Markdown Synthesizer
 
-AeroDoc is an intelligent, layout-aware PDF-to-Markdown engine and interactive Web Studio engineered specifically for **Antigravity** and modern AI coding environments. It converts complex PDFs—including multi-column scientific papers, engineering manuals, mathematical equations, formatted tables, code listings, and graphics—into clean, structured GitHub-Flavored Markdown (GFM) with YAML metadata, Antigravity callout alerts, and zero synthetic AI conversational artifacts.
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FSudhith%2FPDF-TO-.MD)
+[![License: MIT](https://img.shields.io/badge/License-MIT-d4af37.svg)](LICENSE)
+[![Python 3.10+](https://img.shields.io/badge/python-3.10+-lightgrey.svg)](https://www.python.org/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.111.0-10141d.svg)](https://fastapi.tiangolo.com)
+[![Status: Production](https://img.shields.io/badge/Status-Production%20Ready-d4af37.svg)](#)
 
----
-
-## Key Features
-
-- **100% Lossless Content Guarantee**: Every word, table cell, footnote, figure, and page boundary is preserved.
-- **Dynamic Multi-Column Topology Unrolling**: Automatically detects 2-column or 3-column layouts and orders reading blocks naturally (eliminates cross-column text interleaving).
-- **GFM Table Recognition**: Extracts clean tabular data directly into markdown tables with pipe formatting and escaping.
-- **Antigravity Alert Conversion**: Automatically recognizes notes, warnings, tips, and cautions and converts them to standard Antigravity alerts (`> [!NOTE]`, `> [!WARNING]`, `> [!TIP]`, `> [!IMPORTANT]`, `> [!CAUTION]`).
-- **KaTeX Math Engine**: Translates mathematical symbols and formulas into inline `$ ... $` and display `$$ ... $$` blocks.
-- **Embedded or Bundled Figures**: Choose between standalone single-file `.md` (with inline Base64 graphics) or bundled assets directory.
-- **Unique Dynamic Filenames**: Each download receives a timestamped, cryptographically tagged unique filename.
-- **Immediate Post-Download Ephemeral Purge**: Automatically zeros and purges temporary files on the server immediately after download.
-- **Hardened Security Layer**: Magic-byte (`%PDF-`) verification, 50MB file size ceiling, and strict path traversal defenses.
-- **Sliding-Window Rate Limiting**: Per-IP velocity tracking preventing server abuse with automatic `Retry-After` headers.
-- **High-Voltage Bright UI (Zero Blue)**: Electric Neon Lime, Solar Gold, and Neon Fuchsia obsidian dark studio.
+AeroDoc is an institutional-grade document ingestion and layout-aware Markdown synthesis engine engineered for **Google Antigravity**, executive workflows, and advanced AI code assistants. Designed with an executive architectural aesthetic inspired by Apple and premier financial platforms, AeroDoc transforms multi-format corporate and technical documentation into pristine, publication-grade GitHub-Flavored Markdown (GFM) with YAML metadata, Antigravity alerts, and zero synthetic AI trace.
 
 ---
 
-## How to Use AeroDoc
+## 1-Click Deployment to Vercel
 
-### 1. Launch the Interactive Web Studio
+AeroDoc is fully optimized for serverless edge deployment on **Vercel** with zero configuration required.
+
+### Option A: 1-Click Instant Deploy
+Click the button below to fork and deploy directly to your Vercel account:
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FSudhith%2FPDF-TO-.MD)
+
+### Option B: Deploy via Vercel CLI
 ```bash
-python -m aerodoc.cli serve --port 8765
-```
-Open `http://localhost:8765` in your browser.
+# 1. Clone repository
+git clone https://github.com/Sudhith/PDF-TO-.MD.git
+cd "PDF-TO-.MD"
 
-#### Studio Workflow:
-1. **Document Ingestion**: Drag and drop any `.pdf` document into the upload zone, or click **Load Sample Test PDF** to test with the built-in quantum architecture benchmark document.
-2. **Parameters**: Toggle options such as **Embed Images (Base64)** for single-file standalone markdown, **Multi-Column Unrolling**, or **KaTeX Math Engine**.
-3. **Convert**: Click **Convert to Markdown** or press `Ctrl + Enter`.
-4. **Inspect & Verify**: Use the split pane to inspect original PDF pages side-by-side with live formatted Markdown, KaTeX math formulas, and code syntax highlighting.
-5. **Export**: Click **Download .MD** or **Copy**. The temporary file on the server is zeroed and wiped immediately after transmission.
+# 2. Deploy to production
+npx vercel --prod
+```
+
+### Serverless Architecture on Vercel:
+- **Edge Static CDN (`/public`)**: Serves the executive studio frontend (`index.html`, `style.css`, `app.js`) from Vercel's global edge network with sub-millisecond cold start.
+- **Python Serverless Runtime (`/api/index.py`)**: Executes high-throughput document AST transformation in AWS Lambda / Amazon Linux containers.
+- **Dynamic Routing (`vercel.json`)**: Seamlessly proxies `/api/*` and `/health` requests to the FastAPI ASGI application.
+- **Stateless Client-Side In-Memory Downloads**: Generates instant Blob URLs for zero-latency downloads while immediately triggering ephemeral purge on the server.
 
 ---
+
+## Universal Multi-Format Ingestion
+
+| Format | Extensions | Processing Mechanism |
+| :--- | :--- | :--- |
+| **PDF Documents** | `.pdf` | Spatial layout clustering, multi-column topology unrolling, vector tables, and KaTeX math extraction |
+| **Microsoft Word** | `.docx`, `.doc` | Native XML AST traversal, style hierarchy mapping, inline tables, callout detection |
+| **Tabular Data** | `.csv`, `.tsv` | RFC-4180 streaming parser with GFM pipe-delimited table generator and markdown escaping |
+| **Web & Hypertext** | `.html`, `.htm` | Clean DOM subtree normalization, semantics preservation, boilerplate stripping |
+| **Plain Text / Logs** | `.txt`, `.text`, `.log` | Monospace formatting, code fence detection, heading inference |
+| **Structured Data** | `.json`, `.yaml`, `.rtf` | Formatted code blocks with automated syntax classification |
+
+---
+
+## Executive Design Principles
+
+- **Zero Blue Policy**: Strictly curated monochrome palette of Obsidian Carbon (`#060709`), Titanium Silver (`#e2e8f0`), Slate Chrome (`#94a3b8`), and Platinum Gold (`#d4af37`).
+- **Zero Emojis**: 100% replaced by precision 1.5px hairline vector SVGs (Apple SF Symbols / Linear design style).
+- **Dual-Engine Blueprint Viewport**: Real-time side-by-side comparison between original document pages/schematics and rendered Antigravity AST.
+- **Real-Time Telemetry Matrix**: Live feedback on document classification, readability grade, word count, tables extracted, equations parsed, and execution velocity.
+
+---
+
+## Security & Reliability Guardrails
+
+- **Magic-Byte Stream Inspection**: Enforces true binary header validation (e.g. `%PDF-`) preventing malicious file masquerading.
+- **Path Traversal Sanitization**: Strict filename neutralization rejecting `../`, hidden prefixes, and special characters.
+- **Sliding-Window Velocity Limiter**: Per-IP sliding window tracking (25 conversions/min) returning `429 Too Many Requests` with RFC `Retry-After`.
+- **Ephemeral Post-Download Zeroing**: Immediately overwrites file memory buffers with `b""` and unlinks temporary sessions upon download.
+- **Defensive Headers**: Production headers enforced via middleware:
+  - `X-Content-Type-Options: nosniff`
+  - `X-Frame-Options: DENY`
+  - `X-XSS-Protection: 1; mode=block`
+  - `Referrer-Policy: strict-origin-when-cross-origin`
+
+---
+
+## Local Development & Self-Hosting
+
+### 1. Run with Uvicorn (FastAPI)
+```bash
+# Install dependencies
+pip install -r requirements.txt
+
+# Start local server
+python -m uvicorn aerodoc.web.server:app --host 0.0.0.0 --port 8765
+```
+Open [http://localhost:8765](http://localhost:8765) in your browser.
 
 ### 2. Command Line Interface (CLI)
-
-#### Convert a Single PDF
 ```bash
-python -m aerodoc.cli convert document.pdf -o output.md
+# Convert a single document (auto-detects format)
+python -m aerodoc.cli convert financial_report.pdf -o output.md
+
+# Convert with Base64 embedded graphics (single self-contained .md)
+python -m aerodoc.cli convert research_paper.pdf -o paper.md --embed-images
+
+# Batch convert an entire directory
+python -m aerodoc.cli batch ./documents -o ./markdown_archive
 ```
 
-#### Convert to a 100% Self-Contained Standalone .md (Embed Images as Base64)
+### 3. Run Test Suite
 ```bash
-python -m aerodoc.cli convert document.pdf -o standalone.md --embed-images
+pytest -v
 ```
-
-#### Batch Convert an Entire Directory
-```bash
-python -m aerodoc.cli batch ./input_folder -o ./output_folder
-```
+All 13 unit, security, and multi-format integration tests will verify:
+- Lossless AST conversion
+- Magic-byte verification
+- Sliding-window rate limiter
+- DOCX, CSV, HTML, and PDF pipelines
+- Ephemeral zero-wipe cleanup
 
 ---
 
-## Architecture & Security Audit
+## License
 
-- **Typed Exceptions**:
-  - `InvalidPDFMagicByteError` (HTTP 415)
-  - `OversizedFileError` (HTTP 413)
-  - `EncryptedPDFError` (HTTP 422)
-  - `CorruptedPDFError` (HTTP 400)
-  - `RateLimitExceededError` (HTTP 429)
-- **Defensive Headers**: `X-Content-Type-Options: nosniff`, `X-Frame-Options: DENY`, `X-XSS-Protection: 1`, `Referrer-Policy: strict-origin-when-cross-origin`.
-- **Zero-Trace Sanitization**: Guarantees zero synthetic AI conversational chatter in converted `.md` artifacts.
+MIT License. Designed and engineered for high-consequence enterprise applications and Antigravity pair programming.
